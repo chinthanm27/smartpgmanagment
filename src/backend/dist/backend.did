@@ -1,0 +1,333 @@
+type UpdateTenantArgs = 
+ record {
+   advancePaid: nat;
+   bedId: BedId;
+   checkInDate: Timestamp;
+   exitReason: opt text;
+   id: TenantId;
+   idProof: text;
+   isActive: bool;
+   monthlyRent: nat;
+   name: text;
+   phone: text;
+   riskLevel: RiskLevel;
+   roomId: RoomId;
+ };
+type UpdateRoomArgs = 
+ record {
+   capacity: nat;
+   floor: nat;
+   id: RoomId;
+   isAC: bool;
+   number: text;
+ };
+type ToggleMealArgs = 
+ record {
+   chargePerDay: nat;
+   date: Timestamp;
+   isEating: bool;
+   tenantId: TenantId;
+ };
+type Timestamp = int;
+type TenantId = nat;
+type Tenant = 
+ record {
+   advancePaid: nat;
+   bedId: BedId;
+   checkInDate: Timestamp;
+   exitReason: opt text;
+   id: TenantId;
+   idProof: text;
+   isActive: bool;
+   monthlyRent: nat;
+   name: text;
+   phone: text;
+   riskLevel: RiskLevel;
+   roomId: RoomId;
+ };
+type TaskStatus = 
+ variant {
+   done;
+   pending;
+ };
+type StaffTaskId = nat;
+type StaffTask = 
+ record {
+   assignedTo: text;
+   dueDate: Timestamp;
+   id: StaffTaskId;
+   status: TaskStatus;
+   title: text;
+ };
+type SplitType = 
+ variant {
+   equal;
+   weighted;
+ };
+type RoomId = nat;
+type Room = 
+ record {
+   capacity: nat;
+   floor: nat;
+   id: RoomId;
+   isAC: bool;
+   number: text;
+ };
+type RiskLevel = 
+ variant {
+   high;
+   low;
+   medium;
+ };
+type PaymentStatus = 
+ variant {
+   overdue;
+   paid;
+   pending;
+ };
+type PaymentMethod = 
+ variant {
+   cash;
+   upi;
+ };
+type PaymentId = nat;
+type Payment = 
+ record {
+   amount: nat;
+   id: PaymentId;
+   method: opt PaymentMethod;
+   month: nat;
+   paidDate: opt Timestamp;
+   status: PaymentStatus;
+   tenantId: TenantId;
+   year: nat;
+ };
+type ParcelId = nat;
+type Parcel = 
+ record {
+   description: text;
+   id: ParcelId;
+   isCollected: bool;
+   receivedAt: Timestamp;
+   tenantId: TenantId;
+ };
+type MicroChargeId = nat;
+type MicroCharge = 
+ record {
+   addedAt: Timestamp;
+   addedToRent: bool;
+   amount: nat;
+   description: text;
+   id: MicroChargeId;
+   tenantId: TenantId;
+ };
+type MealRecordId = nat;
+type MealRecord = 
+ record {
+   chargePerDay: nat;
+   date: Timestamp;
+   id: MealRecordId;
+   isEating: bool;
+   tenantId: TenantId;
+ };
+type GuestLogId = nat;
+type GuestLog = 
+ record {
+   checkIn: Timestamp;
+   checkOut: Timestamp;
+   extraCharge: nat;
+   guestName: text;
+   id: GuestLogId;
+   tenantId: TenantId;
+ };
+type ExpenseId = nat;
+type ExpenseCategory = 
+ variant {
+   electricity;
+   generator;
+   maintenance;
+   other;
+ };
+type Expense = 
+ record {
+   amount: nat;
+   category: ExpenseCategory;
+   id: ExpenseId;
+   month: nat;
+   notes: text;
+   splitType: SplitType;
+   year: nat;
+ };
+type DashboardStats = 
+ record {
+   activeTenants: nat;
+   highRiskTenants: nat;
+   occupiedBeds: nat;
+   openComplaints: nat;
+   overduePayments: nat;
+   paidPayments: nat;
+   pendingPayments: nat;
+   totalBeds: nat;
+   totalExpensesThisMonth: nat;
+   totalRooms: nat;
+   totalTenants: nat;
+ };
+type ComplaintStatus = 
+ variant {
+   open;
+   resolved;
+ };
+type ComplaintId = nat;
+type ComplaintCategory = 
+ variant {
+   cleaning;
+   electricity;
+   other;
+   water;
+ };
+type Complaint = 
+ record {
+   category: ComplaintCategory;
+   createdAt: Timestamp;
+   description: text;
+   id: ComplaintId;
+   status: ComplaintStatus;
+   tenantId: TenantId;
+ };
+type BedId = nat;
+type Bed = 
+ record {
+   bedLabel: text;
+   id: BedId;
+   isOccupied: bool;
+   roomId: RoomId;
+   tenantId: opt TenantId;
+ };
+type AddTenantArgs = 
+ record {
+   advancePaid: nat;
+   bedId: BedId;
+   checkInDate: Timestamp;
+   idProof: text;
+   monthlyRent: nat;
+   name: text;
+   phone: text;
+   riskLevel: RiskLevel;
+   roomId: RoomId;
+ };
+type AddStaffTaskArgs = 
+ record {
+   assignedTo: text;
+   dueDate: Timestamp;
+   title: text;
+ };
+type AddRoomArgs = 
+ record {
+   capacity: nat;
+   floor: nat;
+   isAC: bool;
+   number: text;
+ };
+type AddPaymentArgs = 
+ record {
+   amount: nat;
+   method: opt PaymentMethod;
+   month: nat;
+   paidDate: opt Timestamp;
+   status: PaymentStatus;
+   tenantId: TenantId;
+   year: nat;
+ };
+type AddParcelArgs = 
+ record {
+   description: text;
+   tenantId: TenantId;
+ };
+type AddMicroChargeArgs = 
+ record {
+   amount: nat;
+   description: text;
+   tenantId: TenantId;
+ };
+type AddGuestLogArgs = 
+ record {
+   checkIn: Timestamp;
+   checkOut: Timestamp;
+   extraCharge: nat;
+   guestName: text;
+   tenantId: TenantId;
+ };
+type AddExpenseArgs = 
+ record {
+   amount: nat;
+   category: ExpenseCategory;
+   month: nat;
+   notes: text;
+   splitType: SplitType;
+   year: nat;
+ };
+type AddComplaintArgs = 
+ record {
+   category: ComplaintCategory;
+   description: text;
+   tenantId: TenantId;
+ };
+service : {
+  addComplaint: (args: AddComplaintArgs) -> (Complaint);
+  addExpense: (args: AddExpenseArgs) -> (Expense);
+  addGuestLog: (args: AddGuestLogArgs) -> (GuestLog);
+  addMicroCharge: (args: AddMicroChargeArgs) -> (MicroCharge);
+  addParcel: (args: AddParcelArgs) -> (Parcel);
+  addPayment: (args: AddPaymentArgs) -> (Payment);
+  addRoom: (args: AddRoomArgs) -> (Room);
+  addStaffTask: (args: AddStaffTaskArgs) -> (StaffTask);
+  addTenant: (args: AddTenantArgs) -> (Tenant);
+  assignBed: (bedId: BedId, tenantId: opt TenantId) -> (bool);
+  calculateMonthlyMessCharge: (tenantId: TenantId, month: nat, year: 
+   nat) -> (nat) query;
+  collectParcel: (id: ParcelId) -> (bool);
+  computeRiskLevel: (id: TenantId, latePaymentCount: nat, complaintCount:
+   nat) -> (bool);
+  deleteTenant: (id: TenantId, exitReason: opt text) -> (bool);
+  freeBed: (bedId: BedId) -> (bool);
+  generateMonthlyPayments: (month: nat, year: nat) -> (vec Payment);
+  getBeds: () -> (vec Bed) query;
+  getComplaints: () -> (vec Complaint) query;
+  getComplaintsByTenant: (tenantId: TenantId) -> (vec Complaint) query;
+  getDashboardStats: () -> (DashboardStats) query;
+  getExpenses: () -> (vec Expense) query;
+  getExpensesByMonth: (month: nat, year: nat) -> (vec Expense) query;
+  getGuestLogs: () -> (vec GuestLog) query;
+  getGuestLogsByTenant: (tenantId: TenantId) -> (vec GuestLog) query;
+  getInactiveTenants: () -> (vec Tenant) query;
+  getMealRecords: () -> (vec MealRecord) query;
+  getMealRecordsByTenant: (tenantId: TenantId) -> (vec MealRecord) query;
+  getMicroCharges: () -> (vec MicroCharge) query;
+  getOpenComplaints: () -> (vec Complaint) query;
+  getParcels: () -> (vec Parcel) query;
+  getPayments: () -> (vec Payment) query;
+  getPaymentsByMonth: (month: nat, year: nat) -> (vec Payment) query;
+  getPaymentsByTenant: (tenantId: TenantId) -> (vec Payment) query;
+  getPendingMicroCharges: () -> (vec MicroCharge) query;
+  getPendingTasks: () -> (vec StaffTask) query;
+  getRooms: () -> (vec Room) query;
+  getStaffTasks: () -> (vec StaffTask) query;
+  getTenants: () -> (vec Tenant) query;
+  getUncollectedParcels: () -> (vec Parcel) query;
+  getWhatsAppConfigured: () -> (bool) query;
+  markChargeAddedToRent: (id: MicroChargeId) -> (bool);
+  sendWhatsAppReminder: (tenantPhone: text, tenantName: text, amount: 
+   nat, month: text) -> (record {
+                           message: text;
+                           ok: bool;
+                         });
+  setWhatsAppConfig: (phoneNumberId: text, accessToken: text) -> (bool);
+  toggleMeal: (args: ToggleMealArgs) -> (MealRecord);
+  updateComplaintStatus: (id: ComplaintId, status: ComplaintStatus) -> (bool);
+  updatePaymentStatus: (id: PaymentId, status: PaymentStatus, method:
+   opt PaymentMethod, paidDate: opt Timestamp) -> (bool);
+  updateRiskLevel: (id: TenantId, riskLevel: RiskLevel) -> (bool);
+  updateRoom: (args: UpdateRoomArgs) -> (bool);
+  updateTaskStatus: (id: StaffTaskId, status: TaskStatus) -> (bool);
+  updateTenant: (args: UpdateTenantArgs) -> (bool);
+}

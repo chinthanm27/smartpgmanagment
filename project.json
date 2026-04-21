@@ -1,0 +1,25 @@
+{
+  "overview": "SmartPG is an intelligent PG accommodation management system for a single PG in Bangalore, India. Built for non-technical PG owners, it provides a modern dark-themed dashboard to track rent payments, manage tenants and rooms, split electricity bills, handle meal/mess charges, and run daily operations — all from a mobile-friendly interface.",
+  "features": [
+    "Payment dashboard showing who paid and who hasn't, with overdue amounts highlighted",
+    "Tenant and room management with bed assignment and risk level tracking",
+    "Smart electricity bill splitting for AC and non-AC rooms",
+    "Daily meal/mess tracking with automatic monthly charge calculation",
+    "Complaint management, staff tasks, parcel log, and micro-charges",
+    "PG health score, income leak detection, and risky tenant alerts",
+    "Tenant portal for self-service rent status, meal toggles, and complaint raising",
+    "Vacancy loss analytics and exit reason trends",
+    "WhatsApp and PDF receipt buttons ready for future integration"
+  ],
+  "category": "business-productivity",
+  "tags": [
+    "pg-management",
+    "rent-tracking",
+    "tenant-management",
+    "accommodation",
+    "india",
+    "property-management",
+    "dashboard"
+  ],
+  "last_updated": "2026-04-21T11:08:44.686Z"
+}

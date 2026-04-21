@@ -1,0 +1,233 @@
+// Version: 1.0.0
+type BedId__807455421 = Nat;
+type Bed__286873190 =
+  {
+    bedLabel : Text;
+    id : BedId__807455421;
+    isOccupied : Bool;
+    roomId : RoomId__905989824;
+    tenantId : ?TenantId__234751125
+  };
+type ComplaintCategory__570933903 = {#cleaning; #electricity; #other; #water};
+type ComplaintId__946927494 = Nat;
+type ComplaintStatus__348956114 = {#open; #resolved};
+type Complaint__549930981 =
+  {
+    category : ComplaintCategory__570933903;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : ComplaintId__946927494;
+    status : ComplaintStatus__348956114;
+    tenantId : TenantId__234751125
+  };
+type ExpenseCategory__502689346 =
+  {#electricity; #generator; #maintenance; #other};
+type ExpenseId__749238 = Nat;
+type Expense__84208759 =
+  {
+    amount : Nat;
+    category : ExpenseCategory__502689346;
+    id : ExpenseId__749238;
+    month : Nat;
+    notes : Text;
+    splitType : SplitType__130986154;
+    year : Nat
+  };
+type GuestLogId__129000703 = Nat;
+type GuestLog__137888181 =
+  {
+    checkIn : Timestamp__301639476;
+    checkOut : Timestamp__301639476;
+    extraCharge : Nat;
+    guestName : Text;
+    id : GuestLogId__129000703;
+    tenantId : TenantId__234751125
+  };
+type HttpHeader__63461418 = {name : Text; value : Text};
+type HttpMethod__7236396 = {#get; #head; #post};
+type HttpRequest__483813165 =
+  {
+    body : ?Blob;
+    headers : [HttpHeader__63461418];
+    max_response_bytes : ?Nat64;
+    method : HttpMethod__7236396;
+    transform : ?TransformContext__603942637;
+    url : Text
+  };
+type HttpResponse__90411362 =
+  {body : Blob; headers : [HttpHeader__63461418]; status : Nat};
+type MealRecordId__821058845 = Nat;
+type MealRecord__120336159 =
+  {
+    chargePerDay : Nat;
+    date : Timestamp__301639476;
+    id : MealRecordId__821058845;
+    isEating : Bool;
+    tenantId : TenantId__234751125
+  };
+type MicroChargeId__78961227 = Nat;
+type MicroCharge__279494345 =
+  {
+    addedAt : Timestamp__301639476;
+    addedToRent : Bool;
+    amount : Nat;
+    description : Text;
+    id : MicroChargeId__78961227;
+    tenantId : TenantId__234751125
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type ParcelId__22306055 = Nat;
+type Parcel__439641036 =
+  {
+    description : Text;
+    id : ParcelId__22306055;
+    isCollected : Bool;
+    receivedAt : Timestamp__301639476;
+    tenantId : TenantId__234751125
+  };
+type PaymentId__1028686908 = Nat;
+type PaymentMethod__46913440 = {#cash; #upi};
+type PaymentStatus__1050999476 = {#overdue; #paid; #pending};
+type Payment__944866998 =
+  {
+    amount : Nat;
+    id : PaymentId__1028686908;
+    method : ?PaymentMethod__46913440;
+    month : Nat;
+    paidDate : ?Timestamp__301639476;
+    status : PaymentStatus__1050999476;
+    tenantId : TenantId__234751125;
+    year : Nat
+  };
+type RiskLevel__200299697 = {#high; #low; #medium};
+type RoomId__905989824 = Nat;
+type Room__1009032735 =
+  {
+    capacity : Nat;
+    floor : Nat;
+    id : RoomId__905989824;
+    isAC : Bool;
+    number : Text
+  };
+type SplitType__130986154 = {#equal; #weighted};
+type StaffTaskId__760437593 = Nat;
+type StaffTask__89314178 =
+  {
+    assignedTo : Text;
+    dueDate : Timestamp__301639476;
+    id : StaffTaskId__760437593;
+    status : TaskStatus__537038292;
+    title : Text
+  };
+type TaskStatus__537038292 = {#done; #pending};
+type TenantId__234751125 = Nat;
+type Tenant__439206791 =
+  {
+    advancePaid : Nat;
+    bedId : BedId__807455421;
+    checkInDate : Timestamp__301639476;
+    exitReason : ?Text;
+    id : TenantId__234751125;
+    idProof : Text;
+    isActive : Bool;
+    monthlyRent : Nat;
+    name : Text;
+    phone : Text;
+    riskLevel : RiskLevel__200299697;
+    roomId : RoomId__905989824
+  };
+type Timestamp__301639476 = Int;
+type TransformContext__603942637 =
+  {
+    context : Blob;
+    function :
+      shared query {context : Blob; response : HttpResponse__90411362} ->
+        async HttpResponse__90411362
+  };
+actor {
+  stable beds :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Bed__286873190]];
+      var elementIndex : Nat__490723111
+    };
+  stable complaints :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Complaint__549930981]];
+      var elementIndex : Nat__490723111
+    };
+  stable expenses :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Expense__84208759]];
+      var elementIndex : Nat__490723111
+    };
+  stable guestLogs :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?GuestLog__137888181]];
+      var elementIndex : Nat__490723111
+    };
+  stable ic :
+    actor {
+      http_request :
+        shared HttpRequest__483813165 -> async HttpResponse__90411362
+    };
+  stable mealRecords :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?MealRecord__120336159]];
+      var elementIndex : Nat__490723111
+    };
+  stable microCharges :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?MicroCharge__279494345]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextBedId : {var val : Nat};
+  stable nextComplaintId : {var val : Nat};
+  stable nextExpenseId : {var val : Nat};
+  stable nextGuestLogId : {var val : Nat};
+  stable nextMealRecordId : {var val : Nat};
+  stable nextMicroChargeId : {var val : Nat};
+  stable nextParcelId : {var val : Nat};
+  stable nextPaymentId : {var val : Nat};
+  stable nextRoomId : {var val : Nat};
+  stable nextStaffTaskId : {var val : Nat};
+  stable nextTenantId : {var val : Nat};
+  stable parcels :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Parcel__439641036]];
+      var elementIndex : Nat__490723111
+    };
+  stable payments :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Payment__944866998]];
+      var elementIndex : Nat__490723111
+    };
+  stable rooms :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Room__1009032735]];
+      var elementIndex : Nat__490723111
+    };
+  stable staffTasks :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?StaffTask__89314178]];
+      var elementIndex : Nat__490723111
+    };
+  stable tenants :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Tenant__439206791]];
+      var elementIndex : Nat__490723111
+    };
+  stable whatsappAccessToken : {var val : Text};
+  stable whatsappPhoneNumberId : {var val : Text}
+};
